@@ -35,7 +35,6 @@ elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
 release="Centos"
 else 
 red "不支持你当前系统，请使用Ubuntu,Debian,Centos系统"
-
 fi
 
 if ! type curl >/dev/null 2>&1; then 
@@ -49,7 +48,7 @@ green "curl已安装"
 
 
 #下载xrayr
-    bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh) > /dev/null
+ bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh) > /dev/null
 
 function setup(){
     echo && read -p "输入面板类型：" panel
@@ -233,4 +232,4 @@ then
 else
     show_menu
 fi
-setup
+fi
