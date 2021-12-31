@@ -233,3 +233,6 @@ else
     show_menu
 fi
 fi
+install_base
+install_acme
+install_XrayR $1
