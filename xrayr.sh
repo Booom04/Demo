@@ -232,3 +232,4 @@ if [[ $# > 0 ]]; then
 else
     show_menu
  fi
+ show_menu
