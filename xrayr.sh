@@ -51,12 +51,12 @@ green "curl已安装"
 #下载xrayr
     bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh) > /dev/null
 
-setup(){
-    echo && read -p "输入面板类型: " ${panel}
-    echo && read -p "输入面板地址:" ${address}
-    echo && read -p "输入ApiKey:" ${key}
-    echo && read -p "输入节点id" ${id}
-    echo && read -p "输入节点类型" ${nodetype}
+function setup(){
+    echo && read -p "输入面板类型：" panel
+    echo && read -p "输入面板地址：" address
+    echo && read -p "输入ApiKey：" key
+    echo && read -p "输入节点id：" id
+    echo && read -p "输入节点类型：" nodetype
 
     echo "Log:
   Level: none # Log level: none, error, warning, info, debug 
