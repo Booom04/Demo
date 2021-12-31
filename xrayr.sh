@@ -232,5 +232,4 @@ if [[ $# > 0 ]]; then
     esac
 else
     show_menu
- fi
- show_menu
+fi
