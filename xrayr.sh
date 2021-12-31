@@ -114,3 +114,121 @@ Nodes:
           ALICLOUD_ACCESS_KEY: aaa
           ALICLOUD_SECRET_KEY: bbb" > /etc/XrayR/config.yml
 }
+
+show_usage() {
+    echo "XrayR 管理脚本使用方法 (兼容使用xrayr执行，大小写不敏感): "
+    echo "------------------------------------------"
+    echo "XrayR                    - 显示管理菜单 (功能更多)"
+    echo "XrayR start              - 启动 XrayR"
+    echo "XrayR stop               - 停止 XrayR"
+    echo "XrayR restart            - 重启 XrayR"
+    echo "XrayR status             - 查看 XrayR 状态"
+    echo "XrayR enable             - 设置 XrayR 开机自启"
+    echo "XrayR disable            - 取消 XrayR 开机自启"
+    echo "XrayR log                - 查看 XrayR 日志"
+    echo "XrayR update             - 更新 XrayR"
+    echo "XrayR update x.x.x       - 更新 XrayR 指定版本"
+    echo "XrayR config             - 显示配置文件内容"
+    echo "XrayR install            - 安装 XrayR"
+    echo "XrayR uninstall          - 卸载 XrayR"
+    echo "XrayR version            - 查看 XrayR 版本"
+    echo "------------------------------------------"
+}
+
+show_menu() {
+    echo -e "
+  ${green}XrayR 后端管理脚本，${plain}${red}不适用于docker${plain}
+--- https://github.com/XrayR-project/XrayR ---
+  ${green}0.${plain} 修改配置
+————————————————
+  ${green}1.${plain} 安装 XrayR
+  ${green}2.${plain} 更新 XrayR
+  ${green}3.${plain} 卸载 XrayR
+————————————————
+  ${green}4.${plain} 启动 XrayR
+  ${green}5.${plain} 停止 XrayR
+  ${green}6.${plain} 重启 XrayR
+  ${green}7.${plain} 查看 XrayR 状态
+  ${green}8.${plain} 查看 XrayR 日志
+————————————————
+  ${green}9.${plain} 设置 XrayR 开机自启
+ ${green}10.${plain} 取消 XrayR 开机自启
+————————————————
+ ${green}11.${plain} 一键安装 bbr (最新内核)
+ ${green}12.${plain} 查看 XrayR 版本 
+ ${green}13.${plain} 升级维护脚本
+ ${green}14.${plain} 配置XrayR
+ "
+ #后续更新可加入上方字符串中
+    show_status
+    echo && read -p "请输入选择 [0-14]: " num
+
+    case "${num}" in
+        0) config
+        ;;
+        1) check_uninstall && install
+        ;;
+        2) check_install && update
+        ;;
+        3) check_install && uninstall
+        ;;
+        4) check_install && start
+        ;;
+        5) check_install && stop
+        ;;
+        6) check_install && restart
+        ;;
+        7) check_install && status
+        ;;
+        8) check_install && show_log
+        ;;
+        9) check_install && enable
+        ;;
+        10) check_install && disable
+        ;;
+        11) install_bbr
+        ;;
+        12) check_install && show_XrayR_version
+        ;;
+        13) update_shell
+        ;;
+        14) setup
+        *) echo -e "${red}请输入正确的数字 [0-14]${plain}"
+        ;;
+    esac
+}
+
+
+if [[ $# > 0 ]]; then
+    case $1 in
+        "start") check_install 0 && start 0
+        ;;
+        "stop") check_install 0 && stop 0
+        ;;
+        "restart") check_install 0 && restart 0
+        ;;
+        "status") check_install 0 && status 0
+        ;;
+        "enable") check_install 0 && enable 0
+        ;;
+        "disable") check_install 0 && disable 0
+        ;;
+        "log") check_install 0 && show_log 0
+        ;;
+        "update") check_install 0 && update 0 $2
+        ;;
+        "config") config $*
+        ;;
+        "install") check_uninstall 0 && install 0
+        ;;
+        "uninstall") check_install 0 && uninstall 0
+        ;;
+        "version") check_install 0 && show_XrayR_version 0
+        ;;
+        "update_shell") update_shell
+        ;;
+        *) show_usage
+    esac
+else
+    show_menu
+ fi
