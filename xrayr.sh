@@ -199,7 +199,8 @@ show_menu() {
     esac
 }
 
-if [[ $# > 0 ]]; then
+if [[ $# > 0 ]]; 
+then
     case $1 in
         "start") check_install 0 && start 0
         ;;
@@ -232,3 +233,4 @@ if [[ $# > 0 ]]; then
 else
     show_menu
 fi
+setup
