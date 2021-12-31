@@ -193,6 +193,7 @@ show_menu() {
         13) update_shell
         ;;
         14) setup
+        ;;
         *) echo -e "${red}请输入正确的数字 [0-14]${plain}"
         ;;
     esac
