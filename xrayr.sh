@@ -3,10 +3,21 @@
 # 一些全局变量
 version="v0.0.1"
 
-red='\033[0;31m'
-green='\033[0;32m'
-yellow='\033[0;33m'
-plain='\033[0m'
+green(){
+    echo -e "\033[32m\033[01m$1\033[0m"
+}
+
+red(){
+    echo -e "\033[31m\033[01m$1\033[0m"
+}
+
+yellow(){
+    echo -e "\033[33m\033[01m$1\033[0m"
+}
+
+plain(){
+    echo -e "\033[0m\033[01m$1\033[0m"
+}
 
 if [[ -f /etc/redhat-release ]]; then
 release="Centos"
@@ -34,73 +45,8 @@ yum -y update && yum install curl -y
 else
 apt-get update -y && apt-get install curl -y
 fi	   
-else
 green "curl已安装"
-fi
 
-if ! type wget >/dev/null 2>&1; then 
-yellow "检测到wget未安装，安装中 "
-if [ $release = "Centos" ]; then
-yum -y update && yum install wget -y
-else
-apt-get update -y && apt-get install wget -y
-fi	   
-else
-green "wget已安装"
-fi
-
-if ! type sudo >/dev/null 2>&1; then 
-yellow "检测到sudo未安装，安装中 "
-if [ $release = "Centos" ]; then
-yum -y update && yum install sudo -y
-else
-apt-get update -y && apt-get install sudo -y
-fi	   
-else
-green "sudo已安装"
-fi
-
-arch=$(arch)
-
-if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
-  arch="64"
-elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
-  arch="arm64-v8a"
-else
-  arch="64"
-  echo -e "${red}检测架构失败，使用默认架构: ${arch}${plain}"
-fi
-
-echo "架构: ${arch}"
-
-if [ "$(getconf WORD_BIT)" != '32' ] && [ "$(getconf LONG_BIT)" != '64' ] ; then
-    echo "本软件不支持 32 位系统(x86)，请使用 64 位系统(x86_64)，如果检测有误，请联系作者"
-    exit 2
-fi
-
-os_version=""
-
-# os version
-if [[ -f /etc/os-release ]]; then
-    os_version=$(awk -F'[= ."]' '/VERSION_ID/{print $3}' /etc/os-release)
-fi
-if [[ -z "$os_version" && -f /etc/lsb-release ]]; then
-    os_version=$(awk -F'[= ."]+' '/DISTRIB_RELEASE/{print $2}' /etc/lsb-release)
-fi
-
-if [[ x"${release}" == x"centos" ]]; then
-    if [[ ${os_version} -le 6 ]]; then
-        echo -e "${red}请使用 CentOS 7 或更高版本的系统！${plain}\n" && exit 1
-    fi
-elif [[ x"${release}" == x"ubuntu" ]]; then
-    if [[ ${os_version} -lt 16 ]]; then
-        echo -e "${red}请使用 Ubuntu 16 或更高版本的系统！${plain}\n" && exit 1
-    fi
-elif [[ x"${release}" == x"debian" ]]; then
-    if [[ ${os_version} -lt 8 ]]; then
-        echo -e "${red}请使用 Debian 8 或更高版本的系统！${plain}\n" && exit 1
-    fi
-fi
 
 #下载xrayr
     bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh) > /dev/null
